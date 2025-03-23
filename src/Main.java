@@ -57,10 +57,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Convert ArrayList to Array
-        String[] linesArray = new String[allrooms.size()];
-        allrooms.toArray(linesArray);
-
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Welcome to Hotel Room Management System");
