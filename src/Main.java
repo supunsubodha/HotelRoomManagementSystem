@@ -43,20 +43,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        // Create an ArrayList to hold room numbers
-        ArrayList<String> allrooms = new ArrayList<>();
-        String filepath = "allrooms.txt";
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-            String line;
-
-            // Read each line from the file
-            while ((line = br.readLine()) != null) {
-                // Add each line to the ArrayList
-                allrooms.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Welcome to Hotel Room Management System");
