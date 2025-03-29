@@ -7,8 +7,38 @@ import java.io.IOException;
 
 public class Main {
 
+    static String[] file_read_write(String op_type,String dataa) {
+        op_type = op_type.toLowerCase();
+        dataa = dataa.toUpperCase();
+
+        //Check operation type(read/write)
+        String[] roomsArray = null;
+        // Create an ArrayList to hold room numbers
+        ArrayList<String> allrooms = new ArrayList<>();
+        String filepath = "allrooms.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+            String line;
+
+            // Read each line from the file
+            while ((line = br.readLine()) != null) {
+                // Add each line to the ArrayList
+                allrooms.add(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    return allrooms.toArray(new String[allrooms.size()]);
+    }
+
     static void show_all_rooms(){
         //A list of all rooms in the hotel should be output.
+        String allrooms[]= file_read_write("read","null");
+        for(String element:allrooms){
+            System.out.println(element);
+            System.out.println();
+        }
     }
 
     static void show_booked_rooms(){
@@ -62,6 +92,7 @@ public class Main {
             System.out.println("9.Show non-A/C rooms");
             System.out.println("10.View rooms prices");
             System.out.println("11.Exit");
+            System.out.println();
 
             //Allows the user to select an action
             System.out.print("Enter your choice:");
