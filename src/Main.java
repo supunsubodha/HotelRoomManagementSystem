@@ -4,12 +4,41 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 public class Main {
 
-    static String[] file_read_write(String op_type,String dataa) {
+    //Loading bar
+    static void loading_bar(String loading_type){
+        System.out.print(loading_type + "[");
+        for(int i=0; i<20; i++){
+            System.out.print("=");
+            int delay;
+            if(i%3==0){
+                delay=500;
+            } else if (i%3==2) {
+                delay=150;
+            }else{
+                delay = 400;
+            }
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println("] Done!");
+    }
+
+
+    static String[] file_read_write(String op_type,String data) {
         op_type = op_type.toLowerCase();
-        dataa = dataa.toUpperCase();
+        data = data.toUpperCase();
+
+        if(op_type.equals("read")){
+            loading_bar("Reading data...");
+        }
 
         //Check operation type(read/write)
         String[] roomsArray = null;
@@ -29,8 +58,33 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if (op_type.equals("write")) {
+
+            loading_bar("Writing data...");
+
+            allrooms.add(data);
+
+            // Clears the file by writing an empty string
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("allrooms.txt"))) {
+                writer.write("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //Append data line by line
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("allrooms.txt", true))) {
+                for(String element:allrooms){
+                    writer.write(element);
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     return allrooms.toArray(new String[allrooms.size()]);
     }
+
 
     static void show_all_rooms(){
         //A list of all rooms in the hotel should be output.
@@ -39,33 +93,53 @@ public class Main {
             System.out.println(element);
             System.out.println();
         }
+        System.out.println("Press Enter to continue to the Main Menu!");
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine(); //Hold user until user press Enter
     }
+
 
     static void show_booked_rooms(){
         //A list of all booked rooms in the hotel should be output.
     }
+
+
     static void show_available_rooms(){
         //A list of all available rooms in the hotel should be output.
     }
+
+
     static void add_a_room(){
         //Allows user to add new room to the system.
     }
 
+
     static void remove_a_room(){
         //Allows user to remove a room from the system.
     }
+
+
     static void book_a_room(){
        // Allows user to book a room.
     }
+
+
     static void release_a_room(){
         //Allows user to release room.(When the customer cancels the reservation)
     }
+
+
     static void show_ac_rooms(){
         //A list of all ac rooms in the hotel should be output.
     }
+
+
     static void show_nonac_rooms(){
         //A list of all non-ac rooms in the hotel should be output.
     }
+
+
     static void view_rooms_prices(){
         //Allows user to see prices of the rooms.
         // AC rooms have a fixed price of x, and non-AC rooms have a fixed price of y.
@@ -74,7 +148,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
+        loading_bar("Program is starting...");
         System.out.println("Welcome to Hotel Room Management System");
         //Main menu loop
         for (;;){
