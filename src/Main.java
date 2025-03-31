@@ -63,7 +63,16 @@ public class Main {
 
             loading_bar("Writing data...");
 
-            allrooms.add(data);
+            if(data.length()>30){//Remove old room code with old details and initialize new room code with updated details to data variable
+                String[] cracked_data = data.split("/");
+                String toremove = cracked_data[0];
+                data = cracked_data[1];
+                allrooms.remove(toremove);
+            }
+
+            if(!data.isEmpty()){//append values to arrays if necessary
+                allrooms.add(data);
+            }
 
             // Clears the file by writing an empty string
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("allrooms.txt"))) {
@@ -87,16 +96,7 @@ public class Main {
 
 
     static void show_all_rooms(){
-        //A list of all rooms in the hotel should be output.
-        String allrooms[]= file_read_write("read","null");
-        for(String element:allrooms){
-            System.out.println(element);
-            System.out.println();
-        }
-        System.out.println("Press Enter to continue to the Main Menu!");
-
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine(); //Hold user until user press Enter
+        
     }
 
 
