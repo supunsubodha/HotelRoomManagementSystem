@@ -96,7 +96,7 @@ public class Main {
 
 
     static void show_all_rooms(){
-        
+
     }
 
 
@@ -155,18 +155,78 @@ public class Main {
             //This loop will be continuously loop, until user input "11" to Exit
 
             System.out.println("Select an action:");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("1.Show all rooms");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("2.Show booked rooms");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("3.Show available rooms");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("4.Add a room");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("5.Remove a room");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("6.Book a room");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("7.Release a room");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("8.Show A/C rooms");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("9.Show non-A/C rooms");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("10.View rooms prices");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("11.Exit");
             System.out.println();
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
             //Allows the user to select an action
             System.out.print("Enter your choice:");
