@@ -63,7 +63,7 @@ public class Main {
 
             loading_bar("Writing data...");
 
-            if(data.length()>30){//Remove old room code with old details and initialize new room code with updated details to data variable
+            if(data.contains("/")){//Remove old room code with old details and initialize new room code with updated details to data variable
                 String[] cracked_data = data.split("/");
                 String toremove = cracked_data[0];
                 data = cracked_data[1];
