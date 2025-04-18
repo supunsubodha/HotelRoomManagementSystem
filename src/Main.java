@@ -154,6 +154,44 @@ public class Main {
 
     static void add_a_room(){
         //Allows user to add new room to the system.
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("");
+
+        String roomnumber;
+        String roomtype;
+
+        for(;;){
+            System.out.println("Room number must include three (3) digits!");
+            System.out.print("Enter room number: ");
+            roomnumber = scanner.nextLine();
+            if(roomnumber.length() == 3){
+                break;
+            }
+            System.out.println("Please try again!");
+        }
+
+        System.out.println("Valid room types:AC,NON-AC");
+
+        for(;;){
+            System.out.print("Enter room type: ");
+            roomtype = scanner.nextLine().toUpperCase();//Handled error by turning all inputs uppercase
+
+            if(roomtype.equals("AC") || roomtype.equals("NON-AC")){
+                break;
+            }
+
+            System.out.println("Invalid input!");
+            System.out.println("Please try again!");
+        }
+
+        String roomcode = roomnumber+","+roomtype+","+"AVAILABLE"+","+"00"+","+"00"+","+"00";
+
+        file_read_write("write",roomcode);
+
+        System.out.print("Press Enter to go back to the Main Menu!:");
+        scanner.nextLine(); //Hold user until user press Enter
     }
 
 
