@@ -96,7 +96,16 @@ public class Main {
 
 
     static void show_all_rooms(){
+        //A list of all rooms in the hotel should be output.
+        String allrooms[]= file_read_write("read","null");
+        for(String element:allrooms){
+            System.out.println(element);
+            System.out.println();
+        }
+        System.out.print("Press Enter to continue to the Main Menu!");
 
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine(); //Hold user until user press Enter
     }
 
 
