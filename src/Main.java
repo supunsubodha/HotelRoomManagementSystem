@@ -135,6 +135,20 @@ public class Main {
 
     static void show_available_rooms(){
         //A list of all available rooms in the hotel should be output.
+        String allrooms[]= file_read_write("read","null");
+        for(String element:allrooms){
+            String rdetails[] = element.split(",");
+            String roomstatus = rdetails[2];
+            if(roomstatus.equalsIgnoreCase("Available")){
+                System.out.println(element);
+                System.out.println();
+            }
+
+        }
+        System.out.print("Press Enter to go back to the Main Menu!/Continue process:");
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine(); //Hold user until user press Enter
     }
 
 
