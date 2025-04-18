@@ -137,6 +137,23 @@ public class Main {
 
     static void show_nonac_rooms(){
         //A list of all non-ac rooms in the hotel should be output.
+        String[] allRooms = file_read_write("read", "null");
+
+        System.out.println("List of NON-AC Rooms:");
+        boolean found = false;
+
+
+        for (String room : allRooms) {
+            room=room.toUpperCase();
+            if (room.contains("NON-AC")) {
+                System.out.println(room);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No NON-AC rooms found.");
+        }
     }
 
 
