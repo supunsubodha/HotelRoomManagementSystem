@@ -156,10 +156,35 @@ public class Main {
         }
     }
 
-
-    static void view_rooms_prices(){
+    //Ifham
+    static void view_room_prices(){
         //Allows user to see prices of the rooms.
         // AC rooms have a fixed price of x, and non-AC rooms have a fixed price of y.
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter room number/room code:");
+        String roomnumber = scanner.nextLine();
+        String allrooms [] =file_read_write("read","null");
+        for(String element:allrooms){
+            if(element.contains(roomnumber)){
+                String arr[]=element.split(",");
+                String roomtype = arr[1];
+                System.out.println();
+                if(roomtype.equals("AC")){
+                    System.out.println("Room no: "+arr[0]);
+                    System.out.println("Room type: AC");
+                    System.out.println("Hourly rate: LKR.2500.00");
+                    System.out.println("Day rate: LKR.14000.00");
+                }
+                else if(roomtype.equals("NON-AC")){
+                    System.out.println("Room no:"+arr[0]);
+                    System.out.println("Room type: Non-AC");
+                    System.out.println("Hourly rate: LKR.2000.00");
+                    System.out.println("Day rate: LKR.10000.00");
+                }
+                System.out.print("Press Enter to go back to the Main Menu!:");
+                scanner.nextLine(); //Hold user until user press Enter
+            }
+        }
     }
 
 
@@ -233,7 +258,7 @@ public class Main {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("10.View rooms prices");
+            System.out.println("10.View room prices");
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {
@@ -270,7 +295,7 @@ public class Main {
             } else if (choice == 9) {
                 show_nonac_rooms();
             } else if (choice == 10) {
-                view_rooms_prices();
+                view_room_prices();
             } else if (choice == 11) {
                 break;
             }else{
