@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
+//...................................................................................................
+
 public class Main {
 
     //Loading bar
@@ -31,7 +33,7 @@ public class Main {
         System.out.println("] Done!");
     }
 
-
+//.....................................................................................................................
     static String[] file_read_write(String op_type,String data) {
         op_type = op_type.toLowerCase();
         data = data.toUpperCase();
@@ -94,7 +96,7 @@ public class Main {
     return allrooms.toArray(new String[allrooms.size()]);
     }
 
-
+//.........................................................................................................................
     static void show_all_rooms(){
         //A list of all rooms in the hotel should be output.
         String allrooms[]= file_read_write("read","null");
@@ -108,7 +110,7 @@ public class Main {
         scanner.nextLine(); //Hold user until user press Enter
     }
 
-
+//.........................................................................................................................
     static void show_booked_rooms(){
         //A list of all booked rooms in the hotel should be output.
         String allrooms[]= file_read_write("read","null");
@@ -132,7 +134,7 @@ public class Main {
         scanner.nextLine(); //Hold user until user press Enter
     }
 
-
+//...................................................................................................................
     static void show_available_rooms(){
         //A list of all available rooms in the hotel should be output.
         String allrooms[]= file_read_write("read","null");
@@ -151,7 +153,7 @@ public class Main {
         scanner.nextLine(); //Hold user until user press Enter
     }
 
-
+//....................................................................................................................
     static void add_a_room(){
         //Allows user to add new room to the system.
 
@@ -194,7 +196,7 @@ public class Main {
         scanner.nextLine(); //Hold user until user press Enter
     }
 
-
+//.................................................................................................................
     static void remove_a_room(){
         //Allows user to remove a room from the system.
         Scanner scanner = new Scanner(System.in);
@@ -210,7 +212,7 @@ public class Main {
         }
     }
 
-
+//...................................................................................................................
     static void book_a_room(){
        // Allows user to book a room.
         Scanner scanner = new Scanner(System.in);
@@ -232,7 +234,7 @@ public class Main {
         }
     }
 
-
+//....................................................................................................................
     static void release_a_room(){
         //Allows user to release room.(When the customer cancels the reservation)
         Scanner scanner = new Scanner(System.in);
@@ -249,7 +251,7 @@ public class Main {
         }
     }
 
-
+//....................................................................................................................
     static void show_ac_rooms(){
         //A list of all ac rooms in the hotel should be output.
         String allrooms[] = file_read_write("read", "null");
@@ -273,7 +275,7 @@ public class Main {
 
     }
 
-
+//....................................................................................................................
     static void show_nonac_rooms(){
         //A list of all non-ac rooms in the hotel should be output.
         String[] allRooms = file_read_write("read", "null");
@@ -295,7 +297,7 @@ public class Main {
         }
     }
 
-
+//...................................................................................................................
     static void view_room_prices(){
         //Allows user to see prices of the rooms.
         // AC rooms have a fixed price of x, and non-AC rooms have a fixed price of y.
@@ -326,7 +328,7 @@ public class Main {
         }
     }
 
-
+//..................................................................................................................
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         loading_bar("Program is starting...");
