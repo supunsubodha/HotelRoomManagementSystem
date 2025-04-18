@@ -213,6 +213,23 @@ public class Main {
 
     static void book_a_room(){
        // Allows user to book a room.
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Do you want to check available rooms before book a room? (Y/N) :");
+        String check = scanner.nextLine();
+        if(check.equalsIgnoreCase("Y")){
+            show_available_rooms();
+        }
+        System.out.println("Enter room number/roomcode of the room hopes to book:");
+        String roomnumber = scanner.nextLine();
+        String allrooms [] =file_read_write("read","null");
+        for(String element:allrooms){
+            if(element.contains(roomnumber)){
+                String spelment[]=element.split(",");
+                String codetosend=element+"/"+spelment[0]+","+spelment[1]+","+"Booked"+","+spelment[3]+","+spelment[4]+","+spelment[5];
+                file_read_write("write",codetosend);
+                break;
+            }
+        }
     }
 
 
