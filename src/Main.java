@@ -197,6 +197,17 @@ public class Main {
 
     static void remove_a_room(){
         //Allows user to remove a room from the system.
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter room number/roomcode to remove:");
+        String roomnumber = scanner.nextLine();
+        String allrooms [] =file_read_write("read","null");
+        for(String element:allrooms){
+            if(element.contains(roomnumber)){
+                String rtremove = element+"/ ";
+                file_read_write("write",rtremove);
+                break;
+            }
+        }
     }
 
 
