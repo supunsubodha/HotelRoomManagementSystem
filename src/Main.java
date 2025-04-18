@@ -11,7 +11,7 @@ public class Main {
 
     //Loading bar
     static void loading_bar(String loading_type){
-        System.out.print(loading_type + "[");
+        System.out.print(loading_type +"⌛"+ "[");
         for(int i=0; i<20; i++){
             System.out.print("=");
             int delay;
@@ -166,7 +166,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         loading_bar("Program is starting...");
-        System.out.println("Welcome to Hotel Room Management System");
+        System.out.println();
+        System.out.println("🤖 Welcome to Hotel Room Management System");
+        System.out.println();
         //Main menu loop
         for (;;){
             //This loop will be continuously loop, until user input "11" to Exit
@@ -274,7 +276,11 @@ public class Main {
             }else{
                 System.out.println("Invalid choice");
             }
-
+            System.out.println();
+            System.out.println("--------------------Hotel Room Management System V1.0--------------------");
+            for(int i=0;i<4;i++) {
+                System.out.println();
+            }
         }
     }
 }
