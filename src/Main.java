@@ -94,7 +94,7 @@ public class Main {
     return allrooms.toArray(new String[allrooms.size()]);
     }
 
-    //Pavithra
+
     static void show_all_rooms(){
         //A list of all rooms in the hotel should be output.
         String allrooms[]= file_read_write("read","null");
@@ -217,7 +217,7 @@ public class Main {
         }
     }
 
-    //Ifham
+
     static void view_room_prices(){
         //Allows user to see prices of the rooms.
         // AC rooms have a fixed price of x, and non-AC rooms have a fixed price of y.
