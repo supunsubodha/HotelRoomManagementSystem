@@ -99,13 +99,15 @@ public class Main {
 //.........................................................................................................................
     static void show_all_rooms(){
         //A list of all rooms in the hotel should be output.
-        String allrooms[]= file_read_write("read","null");
-        for(String element:allrooms){
-            System.out.println(element);
-            System.out.println();
-        }
-        System.out.print("Press Enter to continue to the Main Menu!");
 
+        int roomCount = allRooms.length;
+        int count = 0;
+
+        System.out.println("List of all rooms in the hotel:");
+        while (count < roomCount) {
+            System.out.println(allRooms[count]);
+            count++;
+        }
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine(); //Hold user until user press Enter
     }
@@ -216,18 +218,27 @@ public class Main {
     static void book_a_room(){
        // Allows user to book a room.
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Do you want to check available rooms before book a room? (Y/N) :");
+        System.out.print("🤖 Do you want to check available rooms before book a room? (Y/N) :");
         String check = scanner.nextLine();
         if(check.equalsIgnoreCase("Y")){
             show_available_rooms();
         }
-        System.out.println("Enter room number/roomcode of the room hopes to book:");
+        System.out.print("Enter room number/roomcode of the room hopes to book:");
         String roomnumber = scanner.nextLine();
         String allrooms [] =file_read_write("read","null");
+        System.out.print("Enter the date(Program only support format mm/dd):");
+        String date = scanner.nextLine();//Let user input the date want to book the room.
+        String [] sdate = date.split("/");//Split month and date separetly and assign to two variables.
+        String month = sdate[0];
+        String day = sdate[1];
+        System.out.println("💡 Program only support 24hour format. Don't input minutes.");
+        System.out.println("   Ex:- If you want to book room from 2.00pm to 3.00pm simply input 14 here.");
+        System.out.print("Enter the time hopes to book the room:");
+        String time = scanner.nextLine();
         for(String element:allrooms){
             if(element.contains(roomnumber)){
                 String spelment[]=element.split(",");
-                String codetosend=element+"/"+spelment[0]+","+spelment[1]+","+"Booked"+","+spelment[3]+","+spelment[4]+","+spelment[5];
+                String codetosend=element+"/"+spelment[0]+","+spelment[1]+","+"Booked"+","+month+","+day+","+time;
                 file_read_write("write",codetosend);
                 break;
             }
@@ -237,7 +248,7 @@ public class Main {
 //....................................................................................................................
     static void release_a_room(){
         //Allows user to release room.(When the customer cancels the reservation)
-        
+
     }
 
 //....................................................................................................................
