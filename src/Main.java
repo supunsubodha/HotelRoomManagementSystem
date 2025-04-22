@@ -10,10 +10,16 @@ import java.io.FileWriter;
 //...................................................................................................
 
 public class Main {
+    //ANSI colors
+    public static final String BRIGHT_WHITE = "\u001B[1;37m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
 
     //Loading bar
     static void loading_bar(String loading_type){
-        System.out.print(loading_type +"⌛"+ "[");
+        System.out.print(BRIGHT_WHITE+loading_type +"⌛"+ "[");
         for(int i=0; i<20; i++){
             System.out.print("=");
             int delay;
@@ -30,7 +36,7 @@ public class Main {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("] Done!");
+        System.out.println("] Done!"+RESET);
     }
 
 //.....................................................................................................................
@@ -62,7 +68,6 @@ public class Main {
         }
 
         if (op_type.equals("write")) {
-
             loading_bar("Writing data...");
 
             if(data.contains("/")){//Remove old room code with old details and initialize new room code with updated details to data variable
@@ -75,14 +80,12 @@ public class Main {
             if(!data.isEmpty()){//append values to arrays if necessary
                 allrooms.add(data);
             }
-
             // Clears the file by writing an empty string
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("allrooms.txt"))) {
                 writer.write("");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             //Append data line by line
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("allrooms.txt", true))) {
                 for(String element:allrooms){
@@ -99,15 +102,19 @@ public class Main {
 //.........................................................................................................................
     static void show_all_rooms(){
         //A list of all rooms in the hotel should be output.
+        String[] allRooms = file_read_write("read","null");
 
         int roomCount = allRooms.length;
         int count = 0;
 
-        System.out.println("List of all rooms in the hotel:");
         while (count < roomCount) {
             System.out.println(allRooms[count]);
             count++;
         }
+        System.out.println("");
+        System.out.println(GREEN+"All rooms in the system have been successfully displayed."+RESET);
+
+        System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!:"+RESET);
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine(); //Hold user until user press Enter
     }
@@ -128,9 +135,10 @@ public class Main {
                 System.out.println(element);
                 System.out.println();
             }
-
         }
-        System.out.print("Press Enter to go back to the Main Menu!:");
+        System.out.println();
+        System.out.println(GREEN+"All booked rooms have been successfully displayed."+RESET);
+        System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!:"+RESET);
 
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine(); //Hold user until user press Enter
@@ -139,17 +147,25 @@ public class Main {
 //...................................................................................................................
     static void show_available_rooms(){
         //A list of all available rooms in the hotel should be output.
+        String roomstatus;
         String allrooms[]= file_read_write("read","null");
         for(String element:allrooms){
             String rdetails[] = element.split(",");
-            String roomstatus = rdetails[2];
+            try{
+                roomstatus = rdetails[2];
+            }catch (ArrayIndexOutOfBoundsException e){
+                continue;
+            }
             if(roomstatus.equalsIgnoreCase("Available")){
                 System.out.println(element);
                 System.out.println();
             }
 
         }
-        System.out.print("Press Enter to go back to the Main Menu!/Continue process:");
+        System.out.println("");
+        System.out.println(GREEN+"All available rooms have been successfully displayed."+RESET);
+
+        System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!/Continue process:"+RESET);
 
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine(); //Hold user until user press Enter
@@ -167,34 +183,37 @@ public class Main {
         String roomtype;
 
         for(;;){
-            System.out.println("Room number must include three (3) digits!");
-            System.out.print("Enter room number: ");
+            System.out.println(YELLOW+"💡 Room number must include three (3) digits!"+RESET);
+            System.out.print(BRIGHT_WHITE+"Enter room number: "+RESET);
             roomnumber = scanner.nextLine();
             if(roomnumber.length() == 3){
                 break;
             }
-            System.out.println("Please try again!");
+            System.out.println(RED+"Please try again!"+RESET);
         }
 
-        System.out.println("Valid room types:AC,NON-AC");
+        System.out.println(YELLOW+"💡 Valid room types:AC,NON-AC"+RESET);
 
         for(;;){
-            System.out.print("Enter room type: ");
+            System.out.print(BRIGHT_WHITE+"Enter room type: "+RESET);
             roomtype = scanner.nextLine().toUpperCase();//Handled error by turning all inputs uppercase
 
             if(roomtype.equals("AC") || roomtype.equals("NON-AC")){
                 break;
             }
 
-            System.out.println("Invalid input!");
-            System.out.println("Please try again!");
+            System.out.println(RED+"Invalid input!"+RESET);
+            System.out.println(RED+"Please try again!"+RESET);
         }
 
         String roomcode = roomnumber+","+roomtype+","+"AVAILABLE"+","+"00"+","+"00"+","+"00";
 
         file_read_write("write",roomcode);
 
-        System.out.print("Press Enter to go back to the Main Menu!:");
+        System.out.println("");
+        System.out.println(GREEN+"Room has been successfully added to the system."+RESET);
+
+        System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!:"+RESET);
         scanner.nextLine(); //Hold user until user press Enter
     }
 
@@ -202,7 +221,7 @@ public class Main {
     static void remove_a_room(){
         //Allows user to remove a room from the system.
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter room number/roomcode to remove:");
+        System.out.println(BRIGHT_WHITE+"Enter room number/roomcode to remove:"+RESET);
         String roomnumber = scanner.nextLine();
         String allrooms [] =file_read_write("read","null");
         for(String element:allrooms){
@@ -212,28 +231,30 @@ public class Main {
                 break;
             }
         }
+        System.out.println("");
+        System.out.println(GREEN+"Room has been successfully removed from system."+RESET);
     }
 
 //...................................................................................................................
     static void book_a_room(){
        // Allows user to book a room.
         Scanner scanner = new Scanner(System.in);
-        System.out.print("🤖 Do you want to check available rooms before book a room? (Y/N) :");
+        System.out.print(GREEN+"🤖 Do you want to check available rooms before book a room? (Y/N) :"+RESET);
         String check = scanner.nextLine();
         if(check.equalsIgnoreCase("Y")){
             show_available_rooms();
         }
-        System.out.print("Enter room number/roomcode of the room hopes to book:");
+        System.out.print(BRIGHT_WHITE+"Enter room number/roomcode of the room hopes to book:"+RESET);
         String roomnumber = scanner.nextLine();
         String allrooms [] =file_read_write("read","null");
-        System.out.print("Enter the date(Program only support format mm/dd):");
+        System.out.print(BRIGHT_WHITE+"Enter the date(💡 Program only support format mm/dd):"+RESET);
         String date = scanner.nextLine();//Let user input the date want to book the room.
         String [] sdate = date.split("/");//Split month and date separetly and assign to two variables.
         String month = sdate[0];
         String day = sdate[1];
-        System.out.println("💡 Program only support 24hour format. Don't input minutes.");
-        System.out.println("   Ex:- If you want to book room from 2.00pm to 3.00pm simply input 14 here.");
-        System.out.print("Enter the time hopes to book the room:");
+        System.out.println(GREEN+"💡 Program only support 24hour format. Don't input minutes.");
+        System.out.println("   Ex:- If you want to book room from 2.00pm to 3.00pm simply input 14 here."+RESET);
+        System.out.print(BRIGHT_WHITE+"Enter the time hopes to book the room:"+RESET);
         String time = scanner.nextLine();
         for(String element:allrooms){
             if(element.contains(roomnumber)){
@@ -243,12 +264,30 @@ public class Main {
                 break;
             }
         }
+        System.out.println("");
+        System.out.println(GREEN+"Room has been successfully booked."+RESET);
     }
 
 //....................................................................................................................
     static void release_a_room(){
         //Allows user to release room.(When the customer cancels the reservation)
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(BRIGHT_WHITE+"Enter room number/roomcode of the room hopes to release:"+RESET);
+        String roomnumber = scanner.nextLine();
+        String allrooms [] =file_read_write("read","null");
+        for(String element:allrooms){
+            if(element.contains(roomnumber)){
+                String spelment[]=element.split(",");
+                String codetosend=element+"/"+spelment[0]+","+spelment[1]+","+"AVAILABLE"+","+spelment[3]+","+spelment[4]+","+spelment[5];
+                file_read_write("write",codetosend);
+                break;
+            }
+        }
+        System.out.println("");
+        System.out.println(GREEN+"Room has been successfully released."+RESET);
+        System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!: "+RESET);
+        scanner = new Scanner(System.in);
+        scanner.nextLine(); // Hold user until user presses Enter
     }
 
 //....................................................................................................................
@@ -268,8 +307,10 @@ public class Main {
                 System.out.println();
             }
         }
+        System.out.println("");
+        System.out.println(GREEN+"All AC rooms have been successfully displayed."+RESET);
 
-        System.out.print("Press Enter to go back to the Main Menu!: ");
+        System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!: "+RESET);
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine(); // Hold user until user presses Enter
 
@@ -280,7 +321,6 @@ public class Main {
         //A list of all non-ac rooms in the hotel should be output.
         String[] allRooms = file_read_write("read", "null");
 
-        System.out.println("List of NON-AC Rooms:");
         boolean found = false;
 
 
@@ -293,16 +333,22 @@ public class Main {
         }
 
         if (!found) {
-            System.out.println("No NON-AC rooms found.");
+            System.out.println(RED+"No NON-AC rooms found."+RESET);
         }
+    System.out.println("");
+    System.out.println(GREEN+"All Non-AC rooms have been successfully displayed."+RESET);
+    System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!: "+RESET);
+    Scanner scanner = new Scanner(System.in);
+    scanner.nextLine(); // Hold user until user presses Enter
     }
+
 
 //...................................................................................................................
     static void view_room_prices(){
         //Allows user to see prices of the rooms.
         // AC rooms have a fixed price of x, and non-AC rooms have a fixed price of y.
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter room number/room code:");
+        System.out.print(BRIGHT_WHITE+"Enter room number/room code:"+RESET);
         String roomnumber = scanner.nextLine();
         String allrooms [] =file_read_write("read","null");
         for(String element:allrooms){
@@ -311,18 +357,18 @@ public class Main {
                 String roomtype = arr[1];
                 System.out.println();
                 if(roomtype.equals("AC")){
-                    System.out.println("Room no: "+arr[0]);
-                    System.out.println("Room type: AC");
-                    System.out.println("Hourly rate: LKR.2500.00");
-                    System.out.println("Day rate: LKR.14000.00");
+                    System.out.println(GREEN+"Room no: "+RESET+arr[0]);
+                    System.out.println(GREEN+"Room type:"+RESET+" AC");
+                    System.out.println(GREEN+"Hourly rate:"+RESET+" LKR.2500.00");
+                    System.out.println(GREEN+"Day rate:"+RESET+" LKR.14000.00");
                 }
                 else if(roomtype.equals("NON-AC")){
-                    System.out.println("Room no:"+arr[0]);
-                    System.out.println("Room type: Non-AC");
-                    System.out.println("Hourly rate: LKR.2000.00");
-                    System.out.println("Day rate: LKR.10000.00");
+                    System.out.println(GREEN+"Room no:"+RESET+arr[0]);
+                    System.out.println(GREEN+"Room type:"+RESET+" Non-AC");
+                    System.out.println(GREEN+"Hourly rate:"+RESET+" LKR.2000.00");
+                    System.out.println(GREEN+"Day rate:"+RESET+"LKR.10000.00");
                 }
-                System.out.print("Press Enter to go back to the Main Menu!:");
+                System.out.print(BRIGHT_WHITE+"Press Enter to go back to the Main Menu!:"+RESET);
                 scanner.nextLine(); //Hold user until user press Enter
             }
         }
@@ -333,13 +379,13 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         loading_bar("Program is starting...");
         System.out.println();
-        System.out.println("🤖 Welcome to Hotel Room Management System");
+        System.out.println(GREEN+"🤖 Welcome to Hotel Room Management System"+RESET);
         System.out.println();
         //Main menu loop
         for (;;){
             //This loop will be continuously loop, until user input "11" to Exit
 
-            System.out.println("Select an action:");
+            System.out.println(BRIGHT_WHITE+"Select an action:"+RESET);
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {
@@ -363,13 +409,13 @@ public class Main {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("4.Add a room");
+            System.out.println("4.Add a room to the system");
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("5.Remove a room");
+            System.out.println("5.Remove a room from system");
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {
@@ -399,7 +445,7 @@ public class Main {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("10.View room prices");
+            System.out.println("10.View room price and details");
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {
@@ -414,7 +460,7 @@ public class Main {
             }
 
             //Allows the user to select an action
-            System.out.print("Enter your choice:");
+            System.out.print(BRIGHT_WHITE+"Enter your choice:"+RESET);
             int choice = sc.nextInt();
 
             if (choice == 1) {
@@ -443,7 +489,7 @@ public class Main {
                 System.out.println("Invalid choice");
             }
             System.out.println();
-            System.out.println("--------------------Hotel Room Management System V1.0--------------------");
+            System.out.println(GREEN+"--------------------Hotel Room Management System V1.0--------------------"+RESET);
             for(int i=0;i<4;i++) {
                 System.out.println();
             }
